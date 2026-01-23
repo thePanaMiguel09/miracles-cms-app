@@ -1,4 +1,4 @@
-import '../global.css';
+import "../global.css";
 
 import {
   DarkTheme,
@@ -19,23 +19,28 @@ export const unstable_settings = {
   anchor: "(tabs)",
 };
 
-export default function RootLayout() {
+function LayoutInside() {
   const { isAuthenticated } = useAuthContext();
-
   const colorScheme = useColorScheme();
 
-  if (isAuthenticated) {
-    return <Redirect href={"/(tabs)"} />;
-  }
-
   return (
-    <AuthProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      {isAuthenticated ? (
+        <Redirect href={"/(tabs)"} />
+      ) : (
         <Stack>
           <Stack.Screen name="login" options={{ headerShown: false }} />
         </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
+      )}
+      <StatusBar style="auto" />
+    </ThemeProvider>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <AuthProvider>
+      <LayoutInside />
     </AuthProvider>
   );
 }

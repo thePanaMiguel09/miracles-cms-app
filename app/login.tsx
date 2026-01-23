@@ -1,8 +1,10 @@
 import React from "react";
+
 import LoginScreen from "@/presentation/screens/LoginScreen";
 
-function loging() {
+function Login() {
   return <LoginScreen />;
+  
 }
 
-export default loging;
+export default Login;
