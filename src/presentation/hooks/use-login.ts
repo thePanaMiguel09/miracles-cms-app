@@ -6,8 +6,13 @@ import { z } from "zod";
 import { useAuthContext } from "../context/authContext";
 
 const LoginFormSchema = z.object({
-  email: z.email("Invalid email"),
-  password: z.string().nonempty("Password required"),
+  email: z
+    .string()
+    .min(1, "Email required")
+    .email("Correo inválido, ingrese una dirección de correo válida"),
+  password: z
+    .string()
+    .min(1, "Contraseña requerida"),
 });
 
 export const useLogin = () => {
@@ -18,6 +23,7 @@ export const useLogin = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const {
+    control,
     register,
     handleSubmit,
     reset,
@@ -41,6 +47,7 @@ export const useLogin = () => {
   const handleShowPassword = () => setShowPassword(!showPassword);
 
   return {
+    control,
     showPassword,
     isLoading,
     isAuthenticated,
