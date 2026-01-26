@@ -1,10 +1,18 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
-
 import { User } from "@/domain/entities/user";
 import { LoginUseCase } from "@/domain/usecases/loginUseCase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import { AuthDatasourceImp } from "@/infraestructure/datasources/authDatasourceImp";
+import { UserModel } from "@/infraestructure/models/userModel";
 import { AuthRepositoryImp } from "@/infraestructure/repositories/authRepositoryImp";
+import { jwtDecode } from "jwt-decode";
 
 enum AuthStatus {
   checking,
@@ -35,15 +43,41 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const repository = new AuthRepositoryImp(datasource);
   const loginUseCase = new LoginUseCase(repository);
 
+  useEffect(() => {
+    checkAuth();
+  }, []);
+  
   const login = async (email: string, password: string) => {
     const loggedUser = await loginUseCase.excute(email, password);
+    await AsyncStorage.setItem("token", loggedUser.token);
     setUser(loggedUser.user);
     setStatus(AuthStatus.authenticated);
   };
 
-  const logOut = () => {
+  const logOut = async () => {
+    await AsyncStorage.removeItem("token");
     setUser(undefined);
     setStatus(AuthStatus.unauthenticated);
+  };
+
+
+  const checkAuth = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+
+      if (!token) {
+        setStatus(AuthStatus.unauthenticated);
+        return;
+      }
+
+      const tokenDecoded = jwtDecode<any>(token);
+      const userModel = UserModel.fromJSON(tokenDecoded.user);
+      setUser(userModel.toEntityUser());
+      setStatus(AuthStatus.authenticated);
+    } catch (error) {
+      await AsyncStorage.removeItem("token");
+      setStatus(AuthStatus.unauthenticated);
+    }
   };
 
   return (
