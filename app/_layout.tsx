@@ -5,7 +5,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Redirect, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
@@ -20,18 +20,22 @@ export const unstable_settings = {
 };
 
 function LayoutInside() {
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated, isChecking } = useAuthContext();
   const colorScheme = useColorScheme();
+
+  // mientras se restaura token
+  if (isChecking) return null;
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      {isAuthenticated ? (
-        <Redirect href={"/(tabs)"} />
-      ) : (
-        <Stack>
+      <Stack>
+        {isAuthenticated ? (
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        ) : (
           <Stack.Screen name="login" options={{ headerShown: false }} />
-        </Stack>
-      )}
+        )}
+      </Stack>
+
       <StatusBar style="auto" />
     </ThemeProvider>
   );
