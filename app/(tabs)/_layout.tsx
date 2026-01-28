@@ -1,10 +1,8 @@
 import { Tabs } from "expo-router";
 import React from "react";
 
-import { Colors } from "@/core/theme/theme";
-import { HapticTab } from "@/presentation/components/haptic-tab";
 import { useColorScheme } from "@/presentation/hooks/use-color-scheme";
-import { IconSymbol } from "@/presentation/ui/icon-symbol";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -12,9 +10,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: "red",
         headerShown: false,
-        tabBarButton: HapticTab,
       }}
     >
       <Tabs.Screen
@@ -22,16 +19,44 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <Ionicons color={color} name="home-outline" size={26} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="users"
         options={{
-          title: "Explore",
+          title: "Users",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+            <Ionicons color={color} name="people-outline" size={26} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="products"
+        options={{
+          title: "Products",
+          tabBarIcon: ({ color }) => (
+            <Ionicons color={color} name="basket-outline" size={26} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="commerces"
+        options={{
+          title: "Commerces",
+          tabBarIcon: ({ color }) => (
+            <Ionicons color={color} name="storefront-outline" size={26} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="categories"
+        options={{
+          title: "Categories",
+          tabBarIcon: ({ color }) => (
+            <Ionicons color={color} name="library-outline" size={26} />
           ),
         }}
       />
