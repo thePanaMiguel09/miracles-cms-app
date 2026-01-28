@@ -23,7 +23,6 @@ function LayoutInside() {
   const { isAuthenticated, isChecking } = useAuthContext();
   const colorScheme = useColorScheme();
 
-  // mientras se restaura token
   if (isChecking) return null;
 
   return (
