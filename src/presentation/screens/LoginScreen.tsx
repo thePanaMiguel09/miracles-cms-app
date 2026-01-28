@@ -24,7 +24,6 @@ function LoginScreen() {
     control,
     showPassword,
     handleShowPassword,
-    register,
     errors,
     isLoading,
     handleSubmit,
