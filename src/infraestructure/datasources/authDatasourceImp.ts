@@ -17,7 +17,6 @@ export class AuthDatasourceImp implements AuthDataSource {
 
     async login(email: string, password: string): Promise<{ user: User; token: string }> {
         try {
-            const apiURL = process.env.EXPO_PUBLIC_API_ULR;
             const { data } = await api.post(`/auth/login`, { email, password });
 
             const token: string = data.token;
