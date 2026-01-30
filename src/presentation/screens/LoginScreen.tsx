@@ -1,6 +1,7 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useRef } from "react";
 import {
+  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -102,7 +103,7 @@ function LoginScreen() {
                     className="absolute right-0 top-1/2 -translate-y-1/2"
                   >
                     <Ionicons
-                      name={!showPassword ? "eye-off-outline" : "eye-outline"}
+                      name={showPassword ? "eye-off-outline" : "eye-outline"}
                       size={22}
                       color="#6B7280"
                     />
@@ -118,10 +119,15 @@ function LoginScreen() {
                 <TouchableOpacity
                   onPress={handleSubmit(onSubmit)}
                   className="w-[70%] bg-red-400 rounded-md"
+                  disabled={isLoading}
                 >
-                  <Text className="font-semibold text-white text-center m-3">
-                    {!isLoading ? "Ingresar" : "Cargando"}
-                  </Text>
+                  {isLoading ? (
+                    <ActivityIndicator className="text-white p-4" />
+                  ) : (
+                    <Text className="text-center text-white font-semibold p-4">
+                      Ingresar
+                    </Text>
+                  )}
                 </TouchableOpacity>
               </View>
             </View>
