@@ -13,6 +13,7 @@ import { AuthDatasourceImp } from "@/infraestructure/datasources/authDatasourceI
 import { UserModel } from "@/infraestructure/models/userModel";
 import { AuthRepositoryImp } from "@/infraestructure/repositories/authRepositoryImp";
 import { jwtDecode } from "jwt-decode";
+import { verifyToken } from "../libs/verifyToken";
 
 enum AuthStatus {
   checking,
@@ -46,7 +47,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     checkAuth();
   }, []);
-  
+
   const login = async (email: string, password: string) => {
     const loggedUser = await loginUseCase.excute(email, password);
     await AsyncStorage.setItem("token", loggedUser.token);
@@ -54,19 +55,18 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     setStatus(AuthStatus.authenticated);
   };
 
-  const logOut = async () => {
-    await AsyncStorage.removeItem("token");
-    setUser(undefined);
-    setStatus(AuthStatus.unauthenticated);
-  };
-
-
   const checkAuth = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
 
       if (!token) {
         setStatus(AuthStatus.unauthenticated);
+        return;
+      }
+
+      if (verifyToken(token)) {
+        setStatus(AuthStatus.unauthenticated);
+        logOut();
         return;
       }
 
@@ -78,6 +78,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       await AsyncStorage.removeItem("token");
       setStatus(AuthStatus.unauthenticated);
     }
+  };
+  const logOut = async () => {
+    await AsyncStorage.removeItem("token");
+    setUser(undefined);
+    setStatus(AuthStatus.unauthenticated);
+    return;
   };
 
   return (
