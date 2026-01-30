@@ -9,6 +9,8 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
+import { PaperProvider } from "react-native-paper";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import {
@@ -46,10 +48,12 @@ export default function RootLayout() {
   const queryClient = new QueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <LayoutInside />
-      </AuthProvider>
-    </QueryClientProvider>
+    <PaperProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <LayoutInside />
+        </AuthProvider>
+      </QueryClientProvider>
+    </PaperProvider>
   );
 }
