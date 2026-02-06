@@ -32,11 +32,27 @@ function LayoutInside() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
-        {isAuthenticated ? (
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        ) : (
-          <Stack.Screen name="login" options={{ headerShown: false }} />
-        )}
+        <Stack.Screen
+          name="(tabs)"
+          options={{ headerShown: false }}
+          redirect={!isAuthenticated}
+        />
+        <Stack.Screen
+          name="users/add-user"
+          options={{
+            presentation: "modal",
+            headerShown: true,
+            title: "Crear Usuario",
+            headerTitleAlign: "center",
+          }}
+          redirect={!isAuthenticated}
+        />
+
+        <Stack.Screen
+          redirect={isAuthenticated}
+          name="login"
+          options={{ headerShown: false }}
+        />
       </Stack>
 
       <StatusBar style="auto" />

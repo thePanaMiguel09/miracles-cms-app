@@ -26,7 +26,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="users"
         options={{
-          title: "Users",
+          title: "Usuarios",
           tabBarIcon: ({ color }) => (
             <Ionicons color={color} name="people-outline" size={26} />
           ),
@@ -35,7 +35,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="products"
         options={{
-          title: "Products",
+          title: "Productos",
           tabBarIcon: ({ color }) => (
             <Ionicons color={color} name="basket-outline" size={26} />
           ),
@@ -44,7 +44,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="commerces"
         options={{
-          title: "Commerces",
+          title: "Comercios",
           tabBarIcon: ({ color }) => (
             <Ionicons color={color} name="storefront-outline" size={26} />
           ),
@@ -54,7 +54,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="categories"
         options={{
-          title: "Categories",
+          title: "Categorías",
           tabBarIcon: ({ color }) => (
             <Ionicons color={color} name="library-outline" size={26} />
           ),
