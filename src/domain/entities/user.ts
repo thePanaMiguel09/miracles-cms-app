@@ -14,3 +14,14 @@ export class User {
     ) { }
 
 }
+
+export class UserRegister {
+    constructor(
+        readonly userNames: string,
+        readonly userSurnames: string,
+        readonly userDNI: number,
+        readonly userPhone: number,
+        readonly userEmail: string,
+        readonly userPassword: string
+    ) { }
+}
