@@ -15,7 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Controller } from "react-hook-form";
 
-import { useLogin } from "../hooks/use-login";
+import { useLogin } from "../hooks/auth/use-login";
 
 function LoginScreen() {
   const firtInputRef = useRef<TextInput>(null);
@@ -88,7 +88,7 @@ function LoginScreen() {
                     render={({ field: { onChange, value } }) => (
                       <TextInput
                         ref={secondInputRef}
-                        secureTextEntry={showPassword}
+                        secureTextEntry={!showPassword}
                         placeholder="********"
                         className="border-b-2 border-gray-300 pr-10 py-2"
                         returnKeyType="done"
