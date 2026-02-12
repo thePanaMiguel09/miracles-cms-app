@@ -17,7 +17,7 @@ import {
   AuthProvider,
   useAuthContext,
 } from "@/presentation/context/authContext";
-import { useColorScheme } from "@/presentation/hooks/use-color-scheme.web";
+import { useColorScheme } from "@/presentation/hooks/theme/use-color-scheme.web";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -44,6 +44,17 @@ function LayoutInside() {
             headerShown: true,
             title: "Crear Usuario",
             headerTitleAlign: "center",
+          }}
+          redirect={!isAuthenticated}
+        />
+
+        <Stack.Screen
+          name="users/[id]"
+          options={{
+            presentation: "modal",
+            headerShown: true,
+            title: "Detalle de Usuario",
+            headerTitleAlign: "left",
           }}
           redirect={!isAuthenticated}
         />
