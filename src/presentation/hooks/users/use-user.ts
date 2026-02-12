@@ -3,6 +3,7 @@ import { UserDatasourceImp } from "@/infraestructure/datasources/userDatasourceI
 import { UserRepositoryImp } from "@/infraestructure/repositories/userRepositoryImp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useCommerces } from "../commerces/use-commerce";
@@ -26,7 +27,9 @@ type UserSchemaFormValues = z.infer<typeof UserSchema>;
 
 export const useUser = () => {
 
-    const { register, control, reset, formState: { errors } } = useForm<UserSchemaFormValues>({ resolver: zodResolver(UserSchema), });
+    const [editForm, setEditForm] = useState<boolean>(false);
+
+    const { register, control, reset, formState: { errors } } = useForm<UserSchemaFormValues>({ resolver: zodResolver(UserSchema) });
 
     const { commercesQuery } = useCommerces();
     const { rolesQuery } = useRoles();
@@ -40,6 +43,24 @@ export const useUser = () => {
         staleTime: 1000 * 60 * 5,
     });
 
-    return { commerces, roles, isLoadingRoles, isRolesError, rolesError, isLoadingCommerces, isCommercesError, commercesError, errors, useUserById, register, control, reset, };
+    const handleEditForm = () => setEditForm(!editForm);
+
+    return {
+        commerces,
+        roles,
+        editForm,
+        isLoadingRoles,
+        isRolesError,
+        rolesError,
+        isLoadingCommerces,
+        isCommercesError,
+        commercesError,
+        errors,
+        useUserById,
+        register,
+        control,
+        reset,
+        handleEditForm
+    };
 
 }
