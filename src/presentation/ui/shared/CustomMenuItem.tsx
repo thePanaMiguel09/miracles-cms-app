@@ -9,7 +9,7 @@ export interface CustomMenuItemProps {
 }
 
 function CustomMenuItem({ title, icon, onPress }: CustomMenuItemProps) {
-  return <Menu.Item title={title} leadingIcon={icon} onPress={onPress} />;
+  return <Menu.Item  title={title} leadingIcon={icon} onPress={onPress} />;
 }
 
 export default CustomMenuItem;
