@@ -1,6 +1,6 @@
 import { UserRepository } from "../repositories/userRepository";
 
-export class FecthUserByIdUseCase {
+export class FetchUserByIdUseCase {
     constructor(private readonly userRepository: UserRepository) { }
 
     async execute(id: number): Promise<ReturnType<UserRepository['fetchUser']>> {

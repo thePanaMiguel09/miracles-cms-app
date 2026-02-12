@@ -1,4 +1,4 @@
-import { FecthUserByIdUseCase } from "@/domain/usecases/fetchUserByIdUseCase";
+import { FetchUserByIdUseCase } from "@/domain/usecases/fetchUserByIdUseCase";
 import { UserDatasourceImp } from "@/infraestructure/datasources/userDatasourceImp";
 import { UserRepositoryImp } from "@/infraestructure/repositories/userRepositoryImp";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,7 +10,7 @@ import { useCommerces } from "../commerces/use-commerce";
 import { useRoles } from "../roles/use-roles";
 
 
-const fetchUserByIdUseCase = new FecthUserByIdUseCase(new UserRepositoryImp(new UserDatasourceImp()))
+const fetchUserByIdUseCase = new FetchUserByIdUseCase(new UserRepositoryImp(new UserDatasourceImp()))
 
 const UserSchema = z.object({
     names: z.string().min(2, "Mínimo 2 caracteres").max(50),
