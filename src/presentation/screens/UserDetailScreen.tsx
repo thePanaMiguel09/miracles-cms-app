@@ -173,7 +173,7 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
                   />
                 )}
               />
-              {!isCommercesError && (
+              {isCommercesError && commercesError && (
                 <Text className="text-sm ml-2 text-red-500">
                   {commercesError?.message}
                 </Text>
