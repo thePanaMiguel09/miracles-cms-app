@@ -13,14 +13,15 @@ import { useRoles } from "../roles/use-roles";
 const fetchUserByIdUseCase = new FecthUserByIdUseCase(new UserRepositoryImp(new UserDatasourceImp()))
 
 const UserSchema = z.object({
-    names: z.string(),
-    surnames: z.string(),
-    email: z.email(),
-    phone: z.string(),
-    role: z.number().optional().nullable(),
-    createdAt: z.string(),
+    names: z.string().min(2, "Mínimo 2 caracteres").max(50),
+    surnames: z.string().min(2, "Mínimo 2 caracteres").max(50),
+    email: z.string().email("Email inválido"),
+    phone: z.string()
+        .regex(/^\d{10}$/, "Teléfono debe tener 10 dígitos"),
+    role: z.number().nullable(),
+    commerceId: z.number().nullable(),
+    createdAt: z.string().datetime().or(z.string()),
     status: z.boolean(),
-    commerceId: z.number().optional().nullable(),
 });
 
 type UserSchemaFormValues = z.infer<typeof UserSchema>;
