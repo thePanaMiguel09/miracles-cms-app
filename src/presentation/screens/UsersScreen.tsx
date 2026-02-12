@@ -87,7 +87,7 @@ function UsersScreen() {
             )}
             renderItem={({ item }) => (
               <UsersRowItem
-                userId={item.userId}
+                userId={item.userId!}
                 userEmail={item.email}
                 userFirtName={item.names}
                 userLastName={item.surnames}
