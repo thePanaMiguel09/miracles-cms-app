@@ -5,6 +5,12 @@ export interface RoleApiResponse {
     rol_name: string;
 }
 
+export interface RoleApiWrapperResponse {
+    message: string;
+    data: RoleApiResponse[];
+    success: boolean;
+}
+
 
 export class RoleModel {
     constructor(
