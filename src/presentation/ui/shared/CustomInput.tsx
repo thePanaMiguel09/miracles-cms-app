@@ -24,7 +24,7 @@ const CustomInput = ({
   inputType,
   placeholder,
   autoCapitalizeOptions,
-  isEditable,
+  isEditable = true,
   ...rest
 }: CustomInputProps) => {
   return (
