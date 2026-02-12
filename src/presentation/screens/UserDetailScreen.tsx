@@ -113,7 +113,7 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
             <CustomInput
               name="phone"
               control={control}
-              error={errors.email?.message}
+              error={errors.phone?.message}
               inputType="phone-pad"
               placeholder="Teléfono"
               isEditable={editForm}
