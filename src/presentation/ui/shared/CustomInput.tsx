@@ -14,6 +14,7 @@ interface CustomInputProps {
     | "sentences"
     | "characters"
     | undefined;
+  isEditable?: boolean;
 }
 
 const CustomInput = ({
@@ -23,6 +24,7 @@ const CustomInput = ({
   inputType,
   placeholder,
   autoCapitalizeOptions,
+  isEditable,
   ...rest
 }: CustomInputProps) => {
   return (
@@ -32,6 +34,7 @@ const CustomInput = ({
         control={control}
         render={({ field: { onChange, value, onBlur } }) => (
           <TextInput
+            editable={isEditable}
             autoCapitalize={autoCapitalizeOptions}
             keyboardType={inputType}
             placeholder={placeholder}
