@@ -14,6 +14,7 @@ interface CustomSelectProps {
   onValueChange?: (value: number | null) => void;
   error?: string;
   placeholder?: string;
+  isEnabled?: boolean;
 }
 
 const CustomSelect = ({
@@ -22,10 +23,12 @@ const CustomSelect = ({
   onValueChange,
   error,
   placeholder = "Seleccione una opción",
+  isEnabled = true,
 }: CustomSelectProps) => {
   return (
     <View>
       <Picker
+        enabled={isEnabled}
         selectedValue={value ?? "placeholder"}
         onValueChange={(itemValue) => {
           if (itemValue === "placeholder") {
@@ -35,11 +38,7 @@ const CustomSelect = ({
           }
         }}
       >
-        <Picker.Item
-          label={placeholder}
-          value="placeholder"
-          color="#9CA3AF" // Color gris para el placeholder
-        />
+        <Picker.Item label={placeholder} value="placeholder" color="#9CA3AF" />
         {data.map((item) => (
           <Picker.Item
             key={item.itemValue}
