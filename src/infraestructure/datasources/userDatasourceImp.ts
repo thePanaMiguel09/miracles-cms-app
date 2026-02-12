@@ -1,7 +1,7 @@
 import { api } from "@/config/axios";
 import { UserDatasource } from "@/domain/datasources/userDatasource";
 import { User, UserRegister } from "@/domain/entities/user";
-import { UserModel } from "../models/userModel";
+import { UserApiResponse, UserModel } from "../models/userModel";
 
 
 export class UserDatasourceImp implements UserDatasource {
@@ -26,7 +26,7 @@ export class UserDatasourceImp implements UserDatasource {
     }
     async fetchUsers(): Promise<User[]> {
         try {
-            const { data } = await api.get<User[]>('/users');
+            const { data } = await api.get<UserApiResponse[]>('/users');
             const userModels = data.map(UserModel.fromJSON)
             const users = userModels.map(user => user.toEntityUser());
             return users;
@@ -34,5 +34,17 @@ export class UserDatasourceImp implements UserDatasource {
             console.error('Error fetching users', error)
             throw error;
         }
+    }
+    async fetchUser(id: number): Promise<User | null> {
+        try {
+            const { data } = await api.get<UserApiResponse>(`/users/${id}`);
+
+            const userModel = UserModel.fromJSON(data).toEntityUser();
+            return userModel;
+        } catch (error: any) {
+            console.error('Error fething user', error);
+            throw error;
+        }
+
     }
 }

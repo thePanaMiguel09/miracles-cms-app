@@ -15,4 +15,7 @@ export class UserRepositoryImp extends UserRepository {
     async fetchUsers(): Promise<User[]> {
         return await this.datasource.fetchUsers();
     }
+    async fetchUser(id: number): Promise<User | null> {
+        return await this.datasource.fetchUser(id);
+    }
 }

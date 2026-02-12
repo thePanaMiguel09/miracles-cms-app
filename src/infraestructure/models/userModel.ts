@@ -1,48 +1,63 @@
 import { User } from "@/domain/entities/user";
 
+export interface UserApiResponse {
+    pk_user_store_id?: number;
+    dni: number;
+    user_email: string;
+    names: string;
+    surnames: string;
+    cellphone_number: string;
+    user_state: boolean;
+    user_date_created: Date;
+    fk_store_id: number | null;
+    fk_rol_id: number | null;
+    rol_name?: string;
+}
+
 export class UserModel {
     constructor(
-        public userId: number,
-        public userDNI: number,
-        public userEmail: string,
+        public dni: number,
         public names: string,
         public surnames: string,
+        public email: string,
         public phoneNumber: number,
-        public roleId: number,
-        public storeId: number,
         public createdAt: Date,
-        public userState?: boolean
+        public userState: boolean,
+        public roleId?: number | undefined,
+        public roleName?: string,
+        public storeId?: number | null,
+        public id?: number,
     ) { }
 
-    static fromJSON(json: { [key: string]: any }): UserModel {
+    static fromJSON(json: UserApiResponse): UserModel {
         return new UserModel(
-            json.pk_user_store_id,
             json.dni,
-            json.user_email,
             json.names,
             json.surnames,
-            json.cellphone_number,
-            json.fk_rol_id,
-            json.fk_store_id,
+            json.user_email,
+            Number(json.cellphone_number),
             new Date(json.user_date_created),
             json.user_state,
-
-
+            json?.fk_rol_id ?? undefined,
+            json?.rol_name,
+            json?.fk_store_id ?? null,
+            json?.pk_user_store_id,
         )
     }
 
     toEntityUser(): User {
         return new User(
-            this.userId,
-            this.userDNI,
-            this.userEmail,
+            this.dni,
+            this.email,
             this.names,
             this.surnames,
             this.phoneNumber,
-            this.roleId,
-            this.storeId,
-            this.createdAt,
             this.userState,
+            this.createdAt,
+            this?.storeId ?? null,
+            this?.roleId,
+            this?.roleName,
+            this?.id
         )
     }
 }
