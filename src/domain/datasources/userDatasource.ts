@@ -4,4 +4,5 @@ export abstract class UserDatasource {
     abstract fetchUsers(): Promise<User[]>
     abstract createUser(user: UserRegister): Promise<void>;
     abstract fetchUser(id: number): Promise<User | null>;
+    abstract updateUserState(id: number, state: boolean): Promise<void>;
 }
