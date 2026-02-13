@@ -8,6 +8,7 @@ interface IconButtonProps {
   iconSize: number;
   className?: string;
   onPress: () => void;
+  disabled?: boolean;
 }
 
 function IconButton({
@@ -16,9 +17,11 @@ function IconButton({
   iconSize,
   className,
   onPress,
+  disabled,
 }: IconButtonProps) {
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={onPress}
       className={`
           w-[50px] h-[30px] 
