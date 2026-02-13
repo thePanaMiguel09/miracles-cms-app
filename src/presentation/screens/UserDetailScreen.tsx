@@ -23,6 +23,8 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
   const {
     commerces,
     roles,
+    commerceOptions,
+    roleOptions,
     isLoadingRoles,
     isCommercesError,
     isLoadingCommerces,
@@ -30,7 +32,6 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
     errors,
     editForm,
     control,
-    register,
     reset,
     useUserById,
     handleEditForm,
@@ -72,7 +73,7 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
         >
           <View className="flex flex-row justify-end items-center mr-4">
             <Ionicons name="pencil-outline" size={24} className="mr-1" />
-            <Text className="font-thin mr-2">Editar</Text>
+            <Text className="font-thin mr-2">Editar información</Text>
             <Switch value={editForm} onChange={() => handleEditForm()} />
           </View>
           <View className="flex flex-row items-center ml-4">
@@ -159,12 +160,7 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
                   fieldState: { error },
                 }) => (
                   <CustomSelect
-                    data={
-                      commerces?.map((commerce) => ({
-                        itemLabel: commerce.commerceName,
-                        itemValue: commerce.commerceId,
-                      })) ?? []
-                    }
+                    data={commerceOptions}
                     value={value}
                     onValueChange={onChange}
                     error={error?.message}
@@ -189,12 +185,7 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
                   fieldState: { error },
                 }) => (
                   <CustomSelect
-                    data={
-                      roles?.map((role) => ({
-                        itemValue: role.roleId,
-                        itemLabel: role.roleName,
-                      })) ?? []
-                    }
+                    data={roleOptions}
                     value={value}
                     onValueChange={onChange}
                     error={error?.message}
