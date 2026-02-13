@@ -12,7 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAddUser } from "../hooks/users/use-add-user";
 import CustomInput from "../ui/shared/CustomInput";
-import CustomeModal from "../ui/shared/CustomModal";
+import CustomModal from "../ui/shared/CustomModal";
 
 const AddUserScreen = () => {
   const {
@@ -35,7 +35,8 @@ const AddUserScreen = () => {
 
   return (
     <SafeAreaView className="flex-1">
-      <CustomeModal
+      <CustomModal
+        type="information"
         modalTitle="Usuario Registrado"
         modalMessage={"El usuario fue creado correctamente"}
         modalIcon="checkmark-circle-outline"
