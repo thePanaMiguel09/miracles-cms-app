@@ -5,6 +5,7 @@ import { UserApiResponse, UserModel } from "../models/userModel";
 
 
 export class UserDatasourceImp implements UserDatasource {
+
     async createUser(user: UserRegister): Promise<void> {
         try {
             const { data, status } = await api.post('/auth/register', {
@@ -46,5 +47,19 @@ export class UserDatasourceImp implements UserDatasource {
             throw error;
         }
 
+    }
+
+    async updateUserState(id: number, state: boolean): Promise<void> {
+        try {
+            const { data } = await api.patch('users/update-user-state', {
+                user_id: id,
+                user_state: state
+            });
+
+            return data;
+        } catch (error: any) {
+            console.error('Error updating user state', error)
+            throw error;
+        }
     }
 }
