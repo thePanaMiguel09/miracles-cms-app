@@ -1,6 +1,8 @@
 import { router } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
+import { useUpdateUserState } from "../hooks/users/use-update-user-state";
+import CustomModal from "../ui/shared/CustomModal";
 import IconButton from "../ui/shared/IconButton";
 
 interface UsersRowItemProps {
@@ -22,8 +24,36 @@ function UsersRowItem({
   userState,
   userDateCreated,
 }: UsersRowItemProps) {
+  const {
+    isUpdating,
+    isSuccess,
+    informationModal,
+    confirmationModal,
+    openConfirmationModal,
+    handleConfirmationModal,
+    handleInformationModal,
+    handleConfirmUpdate,
+  } = useUpdateUserState();
+
   return (
     <View className="flex flex-row py-2 border-b border-gray-200">
+      <CustomModal
+        modalTitle="Eliminar Usuario"
+        modalMessage="¿Desea eliminar al usuario?"
+        type="confirmation"
+        visible={confirmationModal}
+        onClose={handleConfirmationModal}
+        modalIcon="information-circle-outline"
+        onConfirmation={handleConfirmUpdate}
+      />
+      <CustomModal
+        modalTitle="Usuario Eliminado"
+        modalMessage={"El usuario ha sido eliminado correctamente."}
+        type="information"
+        visible={informationModal}
+        modalIcon="checkmark-circle-outline"
+        onClose={handleInformationModal}
+      />
       <View className="p-2" style={{ maxWidth: 160 }}>
         <Text className="w-[160px] flex-2 text-start font-normal">
           {userFirtName} {userLastName}
@@ -62,11 +92,12 @@ function UsersRowItem({
           }
         />
         <IconButton
+          disabled={!userState || isUpdating}
           icon="trash-outline"
           iconColor="white"
           iconSize={24}
           className="bg-red-400 shadow-lg shadow-black/80"
-          onPress={() => console.log("Hola")}
+          onPress={() => openConfirmationModal(userId, false)}
         />
       </View>
     </View>
