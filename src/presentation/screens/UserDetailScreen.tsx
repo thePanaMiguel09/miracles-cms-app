@@ -14,6 +14,7 @@ import {
 import { useUser } from "../hooks/users/use-user";
 import CustomInput from "../ui/shared/CustomInput";
 import CustomSelect from "../ui/shared/CustomSelect";
+import CustomSwitch from "../ui/shared/CustomSwitch";
 
 interface UserDetailScreenProps {
   userId: number;
@@ -125,17 +126,13 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
             <Text className="font-semibold">Información de la cuenta</Text>
           </View>
           <View className="bg-white m-4 p-4 rounded-lg shadow-lg shadow-black/50">
-            <View className="flex flex-row items-center justify-between">
-              <Text className="font-light">
-                {user?.userState ? "Usiario activo" : "Usuario inactivo"}
-              </Text>
-              <Switch
-                value={user?.userState}
-                trackColor={{ false: "#F87171", true: "#FCA5A5" }}
-                thumbColor={"#F87171"}
-                disabled={editForm}
-              />
-            </View>
+            <CustomSwitch
+              control={control}
+              name="status"
+              activeLabel="Usuario activo"
+              disabledLabel="Usuario inactivo"
+              isEditable={editForm}
+            />
             <CustomInput
               isEditable={editForm}
               name="createdAt"
