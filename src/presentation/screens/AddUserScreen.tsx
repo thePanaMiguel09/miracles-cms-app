@@ -12,7 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAddUser } from "../hooks/users/use-add-user";
 import CustomInput from "../ui/shared/CustomInput";
-import CustomeModal from "../ui/shared/CustomeModal";
+import CustomeModal from "../ui/shared/CustomModal";
 
 const AddUserScreen = () => {
   const {
