@@ -3,7 +3,7 @@ import { UserDatasourceImp } from "@/infraestructure/datasources/userDatasourceI
 import { UserRepositoryImp } from "@/infraestructure/repositories/userRepositoryImp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useCommerces } from "../commerces/use-commerce";
@@ -44,11 +44,27 @@ export const useUser = () => {
         staleTime: 1000 * 60 * 5,
     });
 
+    const roleOptions = useMemo(() => (
+        roles?.map((role) => ({
+            itemValue: role.roleId,
+            itemLabel: role.roleName
+        })) ?? []
+    ), [commerces]);
+
+    const commerceOptions = useMemo(() => (
+        commerces?.map((commerce) => ({
+            itemValue: commerce.commerceId,
+            itemLabel: commerce.commerceName,
+        })) ?? []
+    ), [commerces]);
+
     const handleEditForm = () => setEditForm(!editForm);
 
     return {
         commerces,
         roles,
+        commerceOptions,
+        roleOptions,
         editForm,
         isLoadingRoles,
         isRolesError,
