@@ -96,7 +96,7 @@ function UsersRowItem({
           icon="trash-outline"
           iconColor="white"
           iconSize={24}
-          className="bg-red-400 shadow-lg shadow-black/80"
+          className={`${userState ? "bg-red-400" : "bg-red-300"}  shadow-lg shadow-black/80`}
           onPress={() => openConfirmationModal(userId, false)}
         />
       </View>
