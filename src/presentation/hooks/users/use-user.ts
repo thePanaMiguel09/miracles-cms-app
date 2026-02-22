@@ -49,7 +49,7 @@ export const useUser = () => {
             itemValue: role.roleId,
             itemLabel: role.roleName
         })) ?? []
-    ), [commerces]);
+    ), [roles]);
 
     const commerceOptions = useMemo(() => (
         commerces?.map((commerce) => ({
