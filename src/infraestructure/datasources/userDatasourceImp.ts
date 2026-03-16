@@ -1,5 +1,6 @@
 import { api } from "@/config/axios";
 import { UserDatasource } from "@/domain/datasources/userDatasource";
+import { UserUpdateDTO } from "@/domain/dtos/userupdate.dto";
 import { User, UserRegister } from "@/domain/entities/user";
 import { UserApiResponse, UserModel } from "../models/userModel";
 
@@ -21,8 +22,7 @@ export class UserDatasourceImp implements UserDatasource {
             }
 
         } catch (error: any) {
-            console.error('Error posting user', { error, msg: error?.message });
-            throw error;
+            throw new Error(error?.response?.data?.message || 'Error posting user', error.message);
         }
     }
     async fetchUsers(): Promise<User[]> {
@@ -32,8 +32,7 @@ export class UserDatasourceImp implements UserDatasource {
             const users = userModels.map(user => user.toEntityUser());
             return users;
         } catch (error: any) {
-            console.error('Error fetching users', error)
-            throw error;
+            throw new Error(error?.response?.data?.message || 'Error fetching users', error);
         }
     }
     async fetchUser(id: number): Promise<User | null> {
@@ -43,8 +42,7 @@ export class UserDatasourceImp implements UserDatasource {
             const userModel = UserModel.fromJSON(data).toEntityUser();
             return userModel;
         } catch (error: any) {
-            console.error('Error fething user', error);
-            throw error;
+            throw new Error(error?.response?.data?.message || 'Error fething user', error);
         }
 
     }
@@ -58,8 +56,40 @@ export class UserDatasourceImp implements UserDatasource {
 
             return data;
         } catch (error: any) {
-            console.error('Error updating user state', error)
-            throw error;
+            throw new Error(error?.response?.data?.message || 'Error updating user state', error);
         }
     }
+    async updateUserCommerce(userId: number, commerceId: number | null): Promise<void> {
+        try {
+            const { data } = await api.patch('/users/update-user-commerce', {
+                user_id: userId,
+                commerce_id: commerceId
+            })
+
+            return data;
+        } catch (error: any) {
+            throw new Error(error?.response?.data?.message || 'Error updating user commmerce', error);
+        }
+    }
+
+    async updateUserInformation(id: number, data: UserUpdateDTO): Promise<void> {
+        try {
+            const payload = {
+                names: data.names,
+                surnames: data.surnames,
+                cellphone_number: data.cellphone_number,
+                user_email: data.user_email,
+                rol: data.rol
+            };
+
+            await api.put(`/users/${id}`, payload);
+
+        } catch (error: any) {
+            throw new Error(error?.response?.data?.message || 'Error updating user information');
+
+        }
+    }
+
+
+
 }
