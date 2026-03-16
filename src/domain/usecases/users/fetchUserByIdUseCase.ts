@@ -1,4 +1,4 @@
-import { UserRepository } from "../repositories/userRepository";
+import { UserRepository } from "@domain/repositories/userRepository";
 
 export class FetchUserByIdUseCase {
     constructor(private readonly userRepository: UserRepository) { }

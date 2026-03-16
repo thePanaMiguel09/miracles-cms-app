@@ -1,4 +1,4 @@
-import type { UserRepository } from "../repositories/userRepository";
+import type { UserRepository } from "@domain/repositories/userRepository";
 
 export class FetchUsersUseCase {
 

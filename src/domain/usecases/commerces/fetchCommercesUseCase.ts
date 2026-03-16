@@ -1,4 +1,4 @@
-import { CommerceRepository } from "../repositories/commerceRepository";
+import { CommerceRepository } from "@/domain/repositories/commerceRepository";
 
 
 export class FetchCommercesUseCase {
