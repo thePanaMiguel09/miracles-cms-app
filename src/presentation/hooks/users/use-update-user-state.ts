@@ -1,10 +1,6 @@
-import { UpdateUserStateUseCase } from "@/domain/usecases/updateUserStateUseCase";
-import { UserDatasourceImp } from "@/infraestructure/datasources/userDatasourceImp";
-import { UserRepositoryImp } from "@/infraestructure/repositories/userRepositoryImp";
+import { userContainer } from "@/presentation/di/containers/userContainer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-
-const updateUserStateUseCase = new UpdateUserStateUseCase(new UserRepositoryImp(new UserDatasourceImp()));
 
 interface UpdateUserProps {
     id: number;
@@ -31,7 +27,7 @@ export const useUpdateUserState = () => {
 
     const updateUserStateQuery = useMutation({
         mutationFn: async ({ id, state }: UpdateUserProps) => {
-            await updateUserStateUseCase.execute(id, state)
+            await userContainer.updateUserStateUseCase.execute(id, state);
         },
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({ queryKey: ['users'] });

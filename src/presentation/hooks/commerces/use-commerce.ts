@@ -1,4 +1,4 @@
-import { FetchCommercesUseCase } from "@/domain/usecases/fetchCommercesUseCase"
+import { FetchCommercesUseCase } from "@/domain/usecases/commerces/fetchCommercesUseCase"
 import { CommerceDatasourceImp } from "@/infraestructure/datasources/commerceDatasourceImp"
 import { CommerceRepositoryImp } from "@/infraestructure/repositories/commerceRepositoryImp"
 import { useQuery } from "@tanstack/react-query"

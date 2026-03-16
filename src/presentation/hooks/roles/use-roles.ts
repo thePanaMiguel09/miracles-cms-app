@@ -1,4 +1,4 @@
-import { FetchRolesUseCase } from "@/domain/usecases/fetchRolesUseCase";
+import { FetchRolesUseCase } from "@/domain/usecases/roles/fetchRolesUseCase";
 import { RoleDatasourceImp } from "@/infraestructure/datasources/roleDatasourceImp";
 import { RoleRepositoryImp } from "@/infraestructure/repositories/roleRepositoryImp";
 import { useQuery } from "@tanstack/react-query";

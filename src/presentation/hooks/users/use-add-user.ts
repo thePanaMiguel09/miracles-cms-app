@@ -1,17 +1,10 @@
-import { CreateUserUseCase } from '@/domain/usecases/createUserUseCase';
-import { UserDatasourceImp } from '@/infraestructure/datasources/userDatasourceImp';
-import { UserRepositoryImp } from '@/infraestructure/repositories/userRepositoryImp';
+import { userContainer } from '@/presentation/di/containers/userContainer';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-const createUserUseCase = new CreateUserUseCase(
-    new UserRepositoryImp(
-        new UserDatasourceImp()
-    )
-);
 
 
 const UserRegisterSchema = z.object({
@@ -70,7 +63,7 @@ export const useAddUser = () => {
                 userPhone: Number(data.userPhone),
             };
 
-            await createUserUseCase.excecute(payload);
+            await userContainer.createUserUseCase.excecute(payload);
             queryClient.invalidateQueries({ queryKey: ['users'] })
             reset();
         },

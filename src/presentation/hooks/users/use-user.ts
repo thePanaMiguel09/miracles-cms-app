@@ -1,6 +1,4 @@
-import { FetchUserByIdUseCase } from "@/domain/usecases/fetchUserByIdUseCase";
-import { UserDatasourceImp } from "@/infraestructure/datasources/userDatasourceImp";
-import { UserRepositoryImp } from "@/infraestructure/repositories/userRepositoryImp";
+import { userContainer } from "@/presentation/di/containers/userContainer";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
@@ -9,8 +7,6 @@ import z from "zod";
 import { useCommerces } from "../commerces/use-commerce";
 import { useRoles } from "../roles/use-roles";
 
-
-const fetchUserByIdUseCase = new FetchUserByIdUseCase(new UserRepositoryImp(new UserDatasourceImp()))
 
 const UserSchema = z.object({
     names: z.string().min(2, "Mínimo 2 caracteres").max(50),
@@ -30,7 +26,7 @@ export const useUser = () => {
 
     const [editForm, setEditForm] = useState<boolean>(false);
 
-    const { register, control, reset, formState: { errors } } = useForm<UserSchemaFormValues>({ resolver: zodResolver(UserSchema) });
+    const { register, control, reset, handleSubmit, formState: { errors, isDirty },} = useForm<UserSchemaFormValues>({ resolver: zodResolver(UserSchema),  });
 
     const { commercesQuery } = useCommerces();
     const { rolesQuery } = useRoles();
@@ -40,7 +36,7 @@ export const useUser = () => {
 
     const useUserById = (id: number) => useQuery({
         queryKey: ['user', id],
-        queryFn: async () => await fetchUserByIdUseCase.execute(id),
+        queryFn: async () => await userContainer.fetchUserUseCase.execute(id),
         staleTime: 1000 * 60 * 5,
     });
 
@@ -66,6 +62,7 @@ export const useUser = () => {
         commerceOptions,
         roleOptions,
         editForm,
+        isDirty,
         isLoadingRoles,
         isRolesError,
         rolesError,
@@ -73,11 +70,13 @@ export const useUser = () => {
         isCommercesError,
         commercesError,
         errors,
+
         useUserById,
         register,
         control,
         reset,
-        handleEditForm
+        handleEditForm,
+        handleSubmit
     };
 
 }
