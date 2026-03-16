@@ -4,10 +4,10 @@ import { KeyboardTypeOptions, Text, TextInput, View } from "react-native";
 
 interface CustomInputProps {
   name: string;
-  control: any;
+  control?: any;
   placeholder: string;
   inputType: KeyboardTypeOptions;
-  error: string | undefined;
+  error?: string | undefined;
   autoCapitalizeOptions?:
     | "words"
     | "none"
