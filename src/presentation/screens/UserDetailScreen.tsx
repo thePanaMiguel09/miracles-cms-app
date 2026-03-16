@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useUpdateUser } from "../hooks/users/use-update-user";
 import { useUser } from "../hooks/users/use-user";
 import CustomInput from "../ui/shared/CustomInput";
 import CustomSelect from "../ui/shared/CustomSelect";
@@ -22,8 +23,7 @@ interface UserDetailScreenProps {
 
 const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
   const {
-    commerces,
-    roles,
+    isDirty,
     commerceOptions,
     roleOptions,
     isLoadingRoles,
@@ -36,7 +36,10 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
     reset,
     useUserById,
     handleEditForm,
+    handleSubmit,
   } = useUser();
+
+  const { handleUpdateCompleteUser, isUpdating } = useUpdateUser();
 
   const { data: user, isLoading: isLoadingUser } = useUserById(userId);
 
@@ -54,6 +57,23 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
       });
     }
   }, [user, reset]);
+
+  const onSubmit = handleSubmit(async (data) => {
+    console.log("Enviando data", data);
+    try {
+      await handleUpdateCompleteUser(userId, {
+        names: data.names,
+        surnames: data.surnames,
+        email: data.email,
+        phone: data.phone,
+        commerceId: data.commerceId,
+        roleId: data.role,
+        status: data.status,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
   if (isLoadingUser || isLoadingCommerces || isLoadingRoles) {
     return (
@@ -194,8 +214,23 @@ const UserDetailScreen = ({ userId }: UserDetailScreenProps) => {
           </View>
           {editForm && (
             <View className="m-4">
-              <TouchableOpacity className="p-4 bg-red-400 rounded-lg">
-                <Text className="text-center">Editar</Text>
+              <TouchableOpacity
+                onPress={() => onSubmit()}
+                disabled={isUpdating}
+                className="p-4 bg-red-400 rounded-lg"
+              >
+                {!isUpdating ? (
+                  <Text className="text-center">Editar</Text>
+                ) : (
+                  <>
+                    <ActivityIndicator
+                      className="mr-2"
+                      size={24}
+                      color={"white"}
+                    />
+                    <Text className="text-center">Actualizando</Text>
+                  </>
+                )}
               </TouchableOpacity>
             </View>
           )}
