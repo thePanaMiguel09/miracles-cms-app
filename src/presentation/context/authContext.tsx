@@ -1,12 +1,12 @@
 import { User } from "@/domain/entities/user";
-import { LoginUseCase } from "@/domain/usecases/loginUseCase";
+import { LoginUseCase } from "@/domain/usecases/auth/loginUseCase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
+    createContext,
+    PropsWithChildren,
+    useContext,
+    useEffect,
+    useState,
 } from "react";
 
 import { AuthDatasourceImp } from "@/infraestructure/datasources/authDatasourceImp";
